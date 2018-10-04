@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import dalek from './dalek.svg';
+import bbc from './bbc.svg';
 
 class App extends Component {
   constructor(props) {
@@ -49,6 +50,12 @@ class App extends Component {
               left: (100-this.state.movementCoefficent) + y*this.state.movementCoefficent + "px", 
               top: (100-this.state.movementCoefficent) + x*this.state.movementCoefficent + "px", 
               position: "absolute", border: "1px solid #000"}}></div>);
+        } else if (Math.floor((Math.random() * 20) + 1)=== 4) {
+          // Check if it's a prize square
+          newBoard[x][y] = 2;
+          drawnBoard.push(<img src={bbc} style={{position: "absolute", width: this.state.movementCoefficent, 
+            height: this.state.movementCoefficent, left: (100-this.state.movementCoefficent) + y*this.state.movementCoefficent + "px", 
+            top: (100-this.state.movementCoefficent) + x*this.state.movementCoefficent + "px", }}/>);
         } else {
           newBoard[x][y] = 0;
         }
@@ -57,8 +64,6 @@ class App extends Component {
   console.log(newBoard);
   this.setState({board: newBoard, boardDrawing: drawnBoard});
   }
-
-  // TODO Randomly place the prizes
   
   // Todo increment the timer
 
@@ -101,7 +106,8 @@ class App extends Component {
       <div ref={this.playingArea} className="App" tabIndex="0" onClick={this.generateBoard.bind(game)} onKeyDown={this.handleKeyDown.bind(game)}>
         <p>player x: {this.state.playerPos.x} player y: {this.state.playerPos.y}</p>
         {this.state.boardDrawing}
-        <img src={dalek} style={{position: "absolute", width: this.state.movementCoefficent, height: this.state.movementCoefficent, left: this.state.playerLocation.x + "px", top: this.state.playerLocation.y + "px"}}/>
+        <img src={dalek} style={{position: "absolute", width: this.state.movementCoefficent, height: this.state.movementCoefficent, 
+        left: this.state.playerLocation.x + "px", top: this.state.playerLocation.y + "px"}}/>
         
       </div>
     );
