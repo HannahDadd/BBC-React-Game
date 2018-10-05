@@ -13,8 +13,10 @@ class App extends Component {
       playerLocation: {x: 100, y: 100},
       movementCoefficent: 40,
       boardDrawing: [],
-      test: ""
+      time: 1000,
+
     };
+    this.timer = 0;
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.playingArea = React.createRef();
   }
@@ -66,6 +68,22 @@ class App extends Component {
   }
   
   // Todo increment the timer
+  startTimer() {
+    this.timer = setInterval(this.countDown, 1000);
+  }
+
+  countDown() {
+    // Remove one second, set state so a re-render happens.
+    let seconds = this.state.time - 1;
+    this.setState({
+      time: seconds
+    });
+    
+    // Check if we're at zero.
+    if (seconds === 0) { 
+      clearInterval(this.timer);
+    }
+  }
 
   // TODO add other players
 
@@ -103,8 +121,10 @@ class App extends Component {
   render() {
     var game = this;
     return (
-      <div ref={this.playingArea} className="App" tabIndex="0" onClick={this.generateBoard.bind(game)} onKeyDown={this.handleKeyDown.bind(game)}>
-        <p>player x: {this.state.playerPos.x} player y: {this.state.playerPos.y}</p>
+      <div ref={this.playingArea} className="App" tabIndex="0" onKeyDown={this.handleKeyDown.bind(game)}>
+        <p>Time Left: {this.state.time}</p>
+        <button onClick={this.startTimer.bind(game)}>Start</button>
+        <button onClick={this.generateBoard.bind(game)}>New Board</button>
         {this.state.boardDrawing}
         <img src={dalek} style={{position: "absolute", width: this.state.movementCoefficent, height: this.state.movementCoefficent, 
         left: this.state.playerLocation.x + "px", top: this.state.playerLocation.y + "px"}}/>
