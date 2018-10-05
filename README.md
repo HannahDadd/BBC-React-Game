@@ -1,1 +1,2 @@
-Please enjoy this text based adventure designed in React Native
+Please enjoy this dalek based adventure designed in React Native
+yarn start to run locally
